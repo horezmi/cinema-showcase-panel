@@ -5,7 +5,7 @@
 ## Установка
 
 1. Склонируйте репозиторий:
-   git clone ...
+   git clone https://github.com/horezmi/cinema-showcase-panel.git
    cd cinema-showcase-panel
 2. Установите зависимости:
    npm install or yarn
