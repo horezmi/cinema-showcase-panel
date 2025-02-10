@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { initialData } from './data/data';
 import CategoryList from './components/CategoryList/CategoryList';
 import CategoryForm from './components/CategoryForm/CategoryForm';
@@ -21,6 +21,10 @@ const App = () => {
 
     const getNewCategories = (categories: Category[]) => {
       return categories
+        .map(cat => ({
+          ...cat,
+          id: cat.isNew ? null : cat.id
+        }))
         .filter(cat => !cat.id && !cat.deleted)
         .map(cat => ({
           ...cat,
@@ -35,6 +39,10 @@ const App = () => {
 
     const getUpdatedCategories = (categories: Category[]) => {
       return categories
+        .map(cat => ({
+          ...cat,
+          id: cat.isNew ? null : cat.id
+        }))
         .filter(cat => cat.id && !cat.deleted)
         .filter(cat => {
           const originalCategory = initialData.categories.find(
@@ -67,7 +75,11 @@ const App = () => {
                 originalSubCategory.name !== sub.name ||
                 !areArraysEqual(originalSubCategory.filmIds, sub.filmIds)
               );
-            });
+            })
+            .map(sub => ({
+              ...sub,
+              id: sub.isNew ? null : sub.id
+            }));
 
           return {
             id: cat.id,
@@ -82,6 +94,10 @@ const App = () => {
 
     const getDeletedCategories = (categories: Category[]) => {
       return categories
+        .map(cat => ({
+          ...cat,
+          id: cat.isNew ? null : cat.id
+        }))
         .filter(cat => cat.deleted && cat.id)
         .map(cat => ({ id: cat.id! }));
     };
@@ -101,7 +117,7 @@ const App = () => {
 
   const handleAddCategory = useCallback(() => {
     const newCategory: Category = {
-      id: null,
+      id: Date.now(),
       name: 'Новая категория',
       subCategories: [],
       isNew: true,

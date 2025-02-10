@@ -32,7 +32,7 @@ function CategoryForm({
 
   const handleAddSubCategory = () => {
     const newSubCategory: SubCategory = {
-      id: null, 
+      id: Date.now(),
       name: '',
       filmIds: [],
       isNew: true
